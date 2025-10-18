@@ -1,5 +1,12 @@
 This is a sample Todolist project by using Next.js
 
+## Features
+- Add/Delete and status todo
+- Stored in localstorage
+- Folders/Files structure scalable
+- Responsive
+- Light/Dark modes
+
 ## Getting Started
 
 First, run the development server:
@@ -19,10 +26,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Features
-- Add/Delete and status todo
-- Stored in localstorage
-- Folders/Files structure scalable
-- Responsive
-- Light/Dark modes
