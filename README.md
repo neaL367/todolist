@@ -1,4 +1,6 @@
-This is a sample Todolist project by using Next.js
+This is a simple Todolist project by using Next.js
+
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/86563954-2f13-453c-bc6e-c1cdd628978a" />
 
 ## Features
 - CRUD todo
@@ -10,6 +12,25 @@ This is a sample Todolist project by using Next.js
 - Search pokemon with PokéAPI
 
 ## Getting Started
+
+Git clone:
+```shell
+git clone https://github.com/neaL367/todolist.git
+```
+
+Install dependencies:
+
+Run `npm install` to install dependencies.
+
+```shell
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
 
 First, run the development server:
 
