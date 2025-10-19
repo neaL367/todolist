@@ -1,11 +1,13 @@
 This is a sample Todolist project by using Next.js
 
 ## Features
-- Add/Delete and status todo
+- CRUD todo
 - Stored in localstorage
+- Search/Filter todo
 - Folders/Files structure scalable
-- Responsive
+- Responsive for mobile
 - Light/Dark modes
+- Search pokemon with PokéAPI
 
 ## Getting Started
 
