@@ -1,24 +1,11 @@
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getTheme, saveTheme } from "@/services/local-storage";
-import type { ThemeModel } from "@/models/theme";
+import { useTheme } from "@/hooks/use-theme";
 
 export function ThemeButton() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    setDarkMode(getTheme() === "dark");
-  }, []);
-
-  useEffect(() => {
-    const theme: ThemeModel = darkMode ? "dark" : "light";
-    document.body.classList.toggle("dark", darkMode);
-    document.body.style.colorScheme = theme;
-    saveTheme(theme);
-  }, [darkMode]);
+  const { darkMode, toggleTheme } = useTheme();
 
   return (
-    <Button variant="outline" size="icon" onClick={() => setDarkMode((prev) => !prev)}>
+    <Button variant="outline" size="icon" onClick={toggleTheme}>
       {darkMode ? "☀️" : "🌙"}
     </Button>
   );
