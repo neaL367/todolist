@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getTheme, saveTheme } from "@/lib/localstorage";
+import { getTheme, saveTheme } from "@/services/local-storage";
 import type { ThemeModel } from "@/models/theme";
 
 export function ThemeButton() {
@@ -18,7 +18,7 @@ export function ThemeButton() {
   }, [darkMode]);
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => setDarkMode((prev) => !prev)}>
+    <Button variant="outline" size="icon" onClick={() => setDarkMode((prev) => !prev)}>
       {darkMode ? "☀️" : "🌙"}
     </Button>
   );
