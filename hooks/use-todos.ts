@@ -1,24 +1,8 @@
-"use client"
-
-import { useState, useEffect } from "react";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import type { TodoModel } from "@/models/todo";
-import { getTodos, saveTodos } from "@/services/local-storage";
 
 export function useTodos() {
-  const [todos, setTodos] = useState<TodoModel[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const loadedTodos = getTodos();
-    setTodos(loadedTodos);
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
-      saveTodos(todos);
-    }
-  }, [todos, isLoaded]);
+  const [todos, setTodos] = useLocalStorage<TodoModel[]>("todos", []);
 
   const handleAdd = (todo: TodoModel) => {
     setTodos((prev) => [todo, ...prev]);

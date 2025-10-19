@@ -1,32 +1,24 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react";
-import { getTheme, saveTheme } from "@/services/local-storage";
+import { useEffect } from "react";
+import { useLocalStorage } from "@/hooks/use-local-storage";
+
 import type { ThemeModel } from "@/models/theme";
 
 export function useTheme() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-
+  const [currentTheme, setCurrentTheme] = useLocalStorage<ThemeModel>("theme", "dark");
+  
   useEffect(() => {
-    const loadedTheme = getTheme() === "dark";
-    setDarkMode(loadedTheme);
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
-      const theme: ThemeModel = darkMode ? "dark" : "light";
-      document.body.classList.toggle("dark", darkMode);
-      document.body.style.colorScheme = theme;
-      saveTheme(theme);
-    }
-  }, [darkMode, isLoaded]);
-
-  const toggleTheme = () => setDarkMode((prev) => !prev);
-
+    const theme: ThemeModel = currentTheme === "dark" ? "dark" : "light";
+    document.body.classList.toggle("dark", theme === "dark");
+    document.body.style.colorScheme = theme;
+  }, [currentTheme]); 
+  
+  const toggleTheme = () =>
+    setCurrentTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    
   return {
-    darkMode,
+    theme: currentTheme,
     toggleTheme,
   };
 }
