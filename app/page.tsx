@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 
 import { ThemeButton } from "@/components/shared/theme-button";
 import { NavigationButton } from "@/components/shared/navigation-button";
@@ -12,67 +12,19 @@ import { ListTodo } from "@/components/todo/list-todo";
 import { AddTodo } from "@/components/todo/add-todo";
 import { Search } from "@/components/shared/search";
 
-import type { TodoModel } from "@/models/todo";
-import { getTodos, saveTodos } from "@/services/local-storage";
 import PokemonSVG from "/public/pokemon.svg";
+
+import { useTodos } from "@/hooks/use-todos";
+import { useTodoFilter } from "@/hooks/use-todo-filter";
 
 const filterOptions = ["all", "done", "not done"] as const;
 
 function Page() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toLowerCase() ?? "";
-
-  const [todos, setTodos] = useState<TodoModel[]>([]);
-  const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const todos = getTodos();
-    setTodos(todos);
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
-      saveTodos(todos);
-    }
-  }, [todos, isLoaded]);
-
-  const handleAdd = (todo: TodoModel) => {
-    setTodos((prev) => [todo, ...prev]);
-  };
-
-  const handleDelete = (id: number) => {
-    setTodos((prev) => prev.filter((t) => t.id !== id));
-  };
-
-  const handleCompleted = (id: number) => {
-    setTodos((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
-    );
-  };
-
-  const handleEdit = (
-    id: number,
-    updates: { title: string; description?: string },
-  ) => {
-    setTodos((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, ...updates } : t)),
-    );
-  };
-
-  const filteredTodos = todos
-    .filter((todo) => {
-      if (filter === "all") return true;
-      if (filter === "done") return todo.completed;
-      if (filter === "not done") return !todo.completed;
-      return true;
-    })
-    .filter(
-      (todo) =>
-        todo.title.toLowerCase().includes(query) ||
-        todo.description?.toLowerCase().includes(query),
-    );
+  
+  const { todos, handleAdd, handleDelete, handleCompleted, handleEdit } = useTodos();
+  const { filter, setFilter, filteredTodos } = useTodoFilter(todos, query);
 
   return (
     <div className="font-sans min-h-screen p-6 sm:p-12">
