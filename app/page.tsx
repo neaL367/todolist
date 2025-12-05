@@ -12,7 +12,7 @@ import { ListTodo } from "@/components/todo/list-todo";
 import { AddTodo } from "@/components/todo/add-todo";
 import { Search } from "@/components/shared/search";
 
-import PokemonSVG from "/public/pokemon.svg";
+import PokemonSVG from "@/components/pokemon/pokemon.svg";
 
 import { useTodos } from "@/hooks/use-todos";
 import { useTodoFilter } from "@/hooks/use-todo-filter";
@@ -22,8 +22,15 @@ const filterOptions = ["all", "done", "not done"] as const;
 function Page() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toLowerCase() ?? "";
-  
-  const { todos, handleAdd, handleDelete, handleCompleted, handleEdit } = useTodos();
+
+  const {
+    todos,
+    handleAdd,
+    handleDelete,
+    handleCompleted,
+    handleEdit,
+    handleAllCompleted,
+  } = useTodos();
   const { filter, setFilter, filteredTodos } = useTodoFilter(todos, query);
 
   return (
@@ -45,18 +52,20 @@ function Page() {
 
         <Separator />
 
-        <section className="w-full flex gap-2 flex-col sm:flex-row ">
+        <section className="w-full flex flex-col sm:flex-row gap-2 flex-wrap">
           <Search placeholder="search todos..." />
           {filterOptions.map((f) => (
             <Button
               key={f}
               onClick={() => setFilter(f)}
-              className={`
-                ${filter === f ? "font-bold underline dark:underline" : ""}`}
+              className={`${
+                filter === f ? "font-bold underline dark:underline" : ""
+              }`}
             >
               {f}
             </Button>
           ))}
+          <Button onClick={handleAllCompleted}>Mark All Done/Not Done</Button>
         </section>
 
         <section className="w-full">

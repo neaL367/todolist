@@ -17,6 +17,10 @@ export function useTodos() {
       prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
     );
   };
+  
+  const handleAllCompleted = () => {
+    setTodos((prev) => prev.map((t) => ({ ...t, completed: !t.completed })));
+  }
 
   const handleEdit = (
     id: number,
@@ -33,5 +37,6 @@ export function useTodos() {
     handleDelete,
     handleCompleted,
     handleEdit,
+    handleAllCompleted
   };
 }
